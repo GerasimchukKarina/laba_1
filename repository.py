@@ -1,11 +1,58 @@
 from typing import Any, Generic, TypeVar
 from exceptions import DublicateError, NotFoundError
-from models import DublicateError, NotFoundError
+from models import  (Passenger, Driver, Vehicle, Bus, Tram, Stop, Route, Trip, Ticket, Payment)
 
+T= TypeVar("T")
 
+class Repository(Generic[T]):
+  def __int__(self, title: str) -> None:
+    self.title = title
+    self._items:dict[int, T] = {}
+  def next_id(self) -> int:
+    return max(self._items, default=0)+1
+  def add(self, item: T) -> T:
+    item_id: Any = item.id
+    if item_id in self._items:
+      raise DuplicateError(f"{self.title}: id {item_id} уже существует")
+      self._items[item_id] = item
+      return item
+  def get(self, item_id: int) -> T:
+    if item_id not in self._items:
+      raise NotFoundError(f"{self.title}: id {item_id} не найден")
+      return self._items[item_id] 
+  def get_all(self) -> list[T]:
+    return list(self._items.values())
+  def update(self, item: int) -> None:
+    item_id: Any = item_id
+    self.get(item_id)
+    self._items[item_id] = item
+  def delete(self, item_id: int) -> None:
+    self.get(item_id)
+    del self._items[item_id] 
+    
+class Database:
+  def __int__(self) -> None:
+    self.passengers.Repository[Passenger] = Repository("Пассажиры")
+    self.drivers.Repository[Driver] = Repository("Водители")
+    self.vehicles.Repository[Vehicle] = Repository("Транспорт")
+    self.stops.Repository[Stop] = Repository("Остановки")
+    self.routes.Repository[Route] = Repository("Маршруты")
+    self.trips.Repository[Trip] = Repository("Рейсы")
+    self.tickets.Repository[Ticket] = Repository("Билеты")
+    self.payment.Repository[Payment] = Repository("Платежи")
 
-
-
+@property
+def collections(self) -> dict[str, Repository[Any]]:
+  return {
+    "passengers":self.passengers,
+    "drivers":self.drivers,
+    "vehicles":self.vehicles,
+    "stops":self.stops,
+    "routes":self.routes,
+    "trips":self.trips,  
+    "tickets":self.tickets,
+    "payment":self.payment,
+  }
 
 
 
