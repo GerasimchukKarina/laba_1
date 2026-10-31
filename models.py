@@ -17,7 +17,7 @@ class Passenger(Person):
   def __post_init__(self) -> None:
     super().__post_init__()
     if not 0 <= self.discount <= 100:
-      raise ValidationError(" ")
+      raise ValidationError("Скидка должна быть от 0 до 100")
 
 @dataclass
 class Driver(Person):
@@ -31,7 +31,7 @@ class Vehicle:
   
   def __post_init__(self) -> None:
     if self.capacity <= 0:
-      raise ValidationError("")
+      raise ValidationError("Вместимость должна быть больше 0")
 
 @dataclass
 class Bus(Vehicle):
@@ -63,7 +63,7 @@ class Trip:
   
   def __post_init__(self) -> None:
     if self.price < 0:
-      raise ValidationError("")
+      raise ValidationError("Цена не может быть отрицательной")
 
 @dataclass
 class Ticket:
